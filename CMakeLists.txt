@@ -383,8 +383,12 @@ else()
   endif()
 endif()
 
-add_library(onnxruntime_mlas ${mlas_common_srcs} ${mlas_platform_srcs})
+add_library(onnxruntime_mlas SHARED ${mlas_common_srcs} ${mlas_platform_srcs})
 target_include_directories(onnxruntime_mlas PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/inc ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+
+add_library(onnxruntime_mlas_static STATIC ${mlas_common_srcs} ${mlas_platform_srcs})
+target_include_directories(onnxruntime_mlas_static PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/inc ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 # Does not support ONNXRUNTIME threadpool
 target_compile_definitions(onnxruntime_mlas PUBLIC MLAS_NO_ONNXRUNTIME_THREADPOOL)
+target_compile_definitions(onnxruntime_mlas_static PUBLIC MLAS_NO_ONNXRUNTIME_THREADPOOL)
